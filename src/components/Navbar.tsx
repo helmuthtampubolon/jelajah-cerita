@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 const navItems = [
   { name: "Beranda", path: "/" },
   { name: "Destinasi", path: "/destinations" },
-  { name: "Paket Wisata", path: "/packages" },
-  { name: "Tentang", path: "/about" },
+  { name: "Paket Wisata", path: "#" },
+  { name: "Tentang", path: "#" },
 ];
 
 export const Navbar = () => {

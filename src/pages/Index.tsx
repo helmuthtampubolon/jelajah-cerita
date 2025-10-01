@@ -69,6 +69,7 @@ const Index = () => {
               <Button
                 size="lg"
                 className="bg-gradient-hero hover:opacity-90 transition-opacity text-base px-8"
+                onClick={() => window.location.href = "/destinations"}
               >
                 Mulai Jelajah
                 <ArrowRight className="ml-2 w-5 h-5" />
