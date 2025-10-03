@@ -10,8 +10,6 @@ const footerLinks = {
   ],
   explore: [
     { name: "Destinasi Populer", path: "/destinations" },
-    { name: "Paket Wisata", path: "/packages" },
-    { name: "Promo", path: "/promo" },
     { name: "Panduan Wisata", path: "/guide" },
   ],
   support: [

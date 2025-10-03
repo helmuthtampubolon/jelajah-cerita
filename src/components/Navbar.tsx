@@ -1,19 +1,28 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, MapPin } from "lucide-react";
+import { Menu, X, MapPin, User, Heart, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const navItems = [
   { name: "Beranda", path: "/" },
   { name: "Destinasi", path: "/destinations" },
-  { name: "Paket Wisata", path: "#" },
-  { name: "Tentang", path: "#" },
+  { name: "Tentang", path: "/about" },
 ];
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const { user, isAuthenticated, logout } = useAuth();
 
   // Handle scroll untuk efek navbar transparan
   useEffect(() => {
@@ -59,9 +68,36 @@ export const Navbar = () => {
                 {item.name}
               </Link>
             ))}
-            <Button className="bg-gradient-hero hover:opacity-90 transition-opacity">
-              Hubungi Kami
-            </Button>
+            
+            {isAuthenticated && user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    {user.name}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>Akun Saya</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link to="/wishlist" className="flex items-center gap-2 cursor-pointer">
+                      <Heart className="h-4 w-4" />
+                      Wishlist
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={logout} className="flex items-center gap-2 cursor-pointer">
+                    <LogOut className="h-4 w-4" />
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button asChild>
+                <Link to="/login">Login</Link>
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -91,7 +127,41 @@ export const Navbar = () => {
                   {item.name}
                 </Link>
               ))}
-              <Button className="bg-gradient-hero mx-4">Hubungi Kami</Button>
+              
+              {isAuthenticated && user ? (
+                <>
+                  <Link
+                    to="/wishlist"
+                    onClick={() => setIsOpen(false)}
+                    className="text-sm font-medium transition-colors hover:text-primary px-4 py-2 rounded-lg flex items-center gap-2"
+                  >
+                    <Heart className="h-4 w-4" />
+                    Wishlist
+                  </Link>
+                  <div className="px-4 py-2">
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Login sebagai: <span className="font-medium text-foreground">{user.name}</span>
+                    </p>
+                    <Button 
+                      onClick={() => {
+                        logout();
+                        setIsOpen(false);
+                      }}
+                      variant="outline"
+                      className="w-full"
+                    >
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Logout
+                    </Button>
+                  </div>
+                </>
+              ) : (
+                <Button asChild className="mx-4">
+                  <Link to="/login" onClick={() => setIsOpen(false)}>
+                    Login
+                  </Link>
+                </Button>
+              )}
             </div>
           </div>
         )}

@@ -26,12 +26,16 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { toast } from "sonner";
+import { useWishlist } from "@/contexts/WishlistContext";
+import ReviewSection from "@/components/ReviewSection";
 
 const DestinationDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [destination, setDestination] = useState<any>(null);
-  const [isLiked, setIsLiked] = useState(false);
+  const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist();
+  
+  const isLiked = destination ? isInWishlist(String(destination.id)) : false;
 
   useEffect(() => {
     // Validasi ID dan cari destinasi
@@ -88,6 +92,16 @@ const DestinationDetail = () => {
     window.open(`https://wa.me/6281234567890?text=${message}`, "_blank");
   };
 
+  const handleToggleWishlist = () => {
+    if (isLiked) {
+      removeFromWishlist(String(destination.id));
+      toast.success("Dihapus dari wishlist");
+    } else {
+      addToWishlist(String(destination.id));
+      toast.success("Ditambahkan ke wishlist");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -128,14 +142,7 @@ const DestinationDetail = () => {
                         />
                         <div className="absolute top-4 right-4 flex gap-2">
                           <button
-                            onClick={() => {
-                              setIsLiked(!isLiked);
-                              toast.success(
-                                isLiked
-                                  ? "Dihapus dari favorit"
-                                  : "Ditambahkan ke favorit"
-                              );
-                            }}
+                            onClick={handleToggleWishlist}
                             className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors"
                           >
                             <Heart
@@ -318,6 +325,16 @@ const DestinationDetail = () => {
             </motion.div>
           </div>
         </div>
+
+        {/* Review Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="mt-12"
+        >
+          <ReviewSection destinationId={String(destination.id)} />
+        </motion.div>
       </div>
 
       <Footer />
