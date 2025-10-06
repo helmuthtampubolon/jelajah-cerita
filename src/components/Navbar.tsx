@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, MapPin, User, Heart, LogOut, Shield } from "lucide-react";
+import { Menu, X, MapPin, User, Heart, LogOut, Shield, Languages } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLocale } from "@/contexts/LocaleContext";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,10 +13,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const navItems = [
-  { name: "Beranda", path: "/" },
-  { name: "Destinasi", path: "/destinations" },
-  { name: "Tentang", path: "/about" },
+// Navigation items will use translations
+const getNavItems = (t: any) => [
+  { name: t.nav.home, path: "/" },
+  { name: t.nav.destinations, path: "/destinations" },
+  { name: t.nav.about, path: "/about" },
 ];
 
 export const Navbar = () => {
@@ -23,6 +25,9 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const { user, isAuthenticated, logout } = useAuth();
+  const { locale, setLocale, t } = useLocale();
+  
+  const navItems = getNavItems(t);
 
   // Handle scroll untuk efek navbar transparan
   useEffect(() => {
@@ -69,6 +74,23 @@ export const Navbar = () => {
               </Link>
             ))}
             
+            {/* Language Switcher */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Languages className="h-5 w-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => setLocale('id')} className="cursor-pointer">
+                  🇮🇩 Bahasa Indonesia {locale === 'id' && '✓'}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setLocale('en')} className="cursor-pointer">
+                  🇬🇧 English {locale === 'en' && '✓'}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            
             {isAuthenticated && user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -78,14 +100,14 @@ export const Navbar = () => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>Akun Saya</DropdownMenuLabel>
+                  <DropdownMenuLabel>{locale === 'id' ? 'Akun Saya' : 'My Account'}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   {user.isAdmin && (
                     <>
                       <DropdownMenuItem asChild>
                         <Link to="/admin" className="flex items-center gap-2 cursor-pointer">
                           <Shield className="h-4 w-4" />
-                          Admin Dashboard
+                          {t.nav.admin}
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
@@ -94,19 +116,19 @@ export const Navbar = () => {
                   <DropdownMenuItem asChild>
                     <Link to="/wishlist" className="flex items-center gap-2 cursor-pointer">
                       <Heart className="h-4 w-4" />
-                      Wishlist
+                      {t.nav.wishlist}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={logout} className="flex items-center gap-2 cursor-pointer">
                     <LogOut className="h-4 w-4" />
-                    Logout
+                    {t.nav.logout}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
               <Button asChild>
-                <Link to="/login">Login</Link>
+                <Link to="/login">{t.nav.login}</Link>
               </Button>
             )}
           </div>
@@ -139,6 +161,29 @@ export const Navbar = () => {
                 </Link>
               ))}
               
+              {/* Language Switcher Mobile */}
+              <div className="px-4 py-2 border-t border-b">
+                <p className="text-xs text-muted-foreground mb-2">{locale === 'id' ? 'Bahasa' : 'Language'}</p>
+                <div className="flex gap-2">
+                  <Button
+                    variant={locale === 'id' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setLocale('id')}
+                    className="flex-1"
+                  >
+                    🇮🇩 ID
+                  </Button>
+                  <Button
+                    variant={locale === 'en' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setLocale('en')}
+                    className="flex-1"
+                  >
+                    🇬🇧 EN
+                  </Button>
+                </div>
+              </div>
+              
               {isAuthenticated && user ? (
                 <>
                   {user.isAdmin && (
@@ -148,7 +193,7 @@ export const Navbar = () => {
                       className="text-sm font-medium transition-colors hover:text-primary px-4 py-2 rounded-lg flex items-center gap-2"
                     >
                       <Shield className="h-4 w-4" />
-                      Admin Dashboard
+                      {t.nav.admin}
                     </Link>
                   )}
                   <Link
@@ -157,11 +202,11 @@ export const Navbar = () => {
                     className="text-sm font-medium transition-colors hover:text-primary px-4 py-2 rounded-lg flex items-center gap-2"
                   >
                     <Heart className="h-4 w-4" />
-                    Wishlist
+                    {t.nav.wishlist}
                   </Link>
                   <div className="px-4 py-2">
                     <p className="text-sm text-muted-foreground mb-2">
-                      Login sebagai: <span className="font-medium text-foreground">{user.name}</span>
+                      {locale === 'id' ? 'Login sebagai' : 'Logged in as'}: <span className="font-medium text-foreground">{user.name}</span>
                     </p>
                     <Button 
                       onClick={() => {
@@ -172,14 +217,14 @@ export const Navbar = () => {
                       className="w-full"
                     >
                       <LogOut className="h-4 w-4 mr-2" />
-                      Logout
+                      {t.nav.logout}
                     </Button>
                   </div>
                 </>
               ) : (
                 <Button asChild className="mx-4">
                   <Link to="/login" onClick={() => setIsOpen(false)}>
-                    Login
+                    {t.nav.login}
                   </Link>
                 </Button>
               )}

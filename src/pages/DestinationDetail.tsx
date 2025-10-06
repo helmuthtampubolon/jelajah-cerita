@@ -28,14 +28,26 @@ import {
 import { toast } from "sonner";
 import { useWishlist } from "@/contexts/WishlistContext";
 import ReviewSection from "@/components/ReviewSection";
+import { WeatherWidget } from "@/components/WeatherWidget";
+import { useLocale } from "@/contexts/LocaleContext";
+import { useSEO } from "@/hooks/useSEO";
 
 const DestinationDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [destination, setDestination] = useState<any>(null);
   const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist();
+  const { locale } = useLocale();
   
   const isLiked = destination ? isInWishlist(String(destination.id)) : false;
+
+  // SEO for this page
+  useSEO({
+    title: destination?.name,
+    description: destination?.description,
+    image: destination?.image,
+    keywords: [destination?.category, destination?.location, 'wisata', 'travel', 'indonesia'],
+  });
 
   useEffect(() => {
     // Validasi ID dan cari destinasi
@@ -246,11 +258,21 @@ const DestinationDetail = () => {
           </div>
 
           {/* Sidebar */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 space-y-6">
+            {/* Weather Widget */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
+            >
+              <WeatherWidget location={destination.location} />
+            </motion.div>
+            
+            {/* Info Card */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 }}
             >
               <Card className="sticky top-24 shadow-card">
                 <CardContent className="p-6">

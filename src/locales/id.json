@@ -1,0 +1,67 @@
+{
+  "nav": {
+    "home": "Beranda",
+    "destinations": "Destinasi",
+    "about": "Tentang",
+    "login": "Masuk",
+    "register": "Daftar",
+    "wishlist": "Favorit",
+    "admin": "Dashboard Admin",
+    "logout": "Keluar"
+  },
+  "hero": {
+    "title": "Jelajahi Keindahan Indonesia",
+    "subtitle": "Temukan destinasi wisata terbaik di seluruh nusantara",
+    "cta": "Mulai Jelajah"
+  },
+  "categories": {
+    "title": "Kategori Wisata",
+    "all": "Semua",
+    "beach": "Pantai",
+    "mountain": "Gunung",
+    "culture": "Budaya",
+    "nature": "Alam",
+    "culinary": "Kuliner"
+  },
+  "destinations": {
+    "popular": "Destinasi Populer",
+    "viewAll": "Lihat Semua",
+    "viewDetail": "Lihat Detail",
+    "reviews": "ulasan",
+    "from": "Mulai dari",
+    "addToWishlist": "Tambah ke Favorit",
+    "removeFromWishlist": "Hapus dari Favorit"
+  },
+  "footer": {
+    "description": "Platform terpercaya untuk menemukan destinasi wisata terbaik di Indonesia",
+    "quickLinks": "Tautan Cepat",
+    "contact": "Kontak",
+    "followUs": "Ikuti Kami",
+    "rights": "Hak Cipta Dilindungi"
+  },
+  "auth": {
+    "login": "Masuk",
+    "register": "Daftar",
+    "email": "Email",
+    "password": "Kata Sandi",
+    "name": "Nama Lengkap",
+    "noAccount": "Belum punya akun?",
+    "hasAccount": "Sudah punya akun?",
+    "loginSuccess": "Login berhasil!",
+    "registerSuccess": "Registrasi berhasil! Silakan login."
+  },
+  "review": {
+    "title": "Ulasan Pengunjung",
+    "add": "Tambah Ulasan",
+    "yourReview": "Tulis ulasan Anda",
+    "rating": "Rating",
+    "submit": "Kirim Ulasan",
+    "loginRequired": "Silakan login untuk memberikan ulasan"
+  },
+  "weather": {
+    "title": "Cuaca Saat Ini",
+    "temperature": "Suhu",
+    "humidity": "Kelembaban",
+    "windSpeed": "Kecepatan Angin"
+  }
+}

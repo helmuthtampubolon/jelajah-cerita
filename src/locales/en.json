@@ -1,0 +1,67 @@
+{
+  "nav": {
+    "home": "Home",
+    "destinations": "Destinations",
+    "about": "About",
+    "login": "Login",
+    "register": "Register",
+    "wishlist": "Wishlist",
+    "admin": "Admin Dashboard",
+    "logout": "Logout"
+  },
+  "hero": {
+    "title": "Explore Indonesia's Beauty",
+    "subtitle": "Discover the best tourist destinations across the archipelago",
+    "cta": "Start Exploring"
+  },
+  "categories": {
+    "title": "Travel Categories",
+    "all": "All",
+    "beach": "Beach",
+    "mountain": "Mountain",
+    "culture": "Culture",
+    "nature": "Nature",
+    "culinary": "Culinary"
+  },
+  "destinations": {
+    "popular": "Popular Destinations",
+    "viewAll": "View All",
+    "viewDetail": "View Details",
+    "reviews": "reviews",
+    "from": "From",
+    "addToWishlist": "Add to Wishlist",
+    "removeFromWishlist": "Remove from Wishlist"
+  },
+  "footer": {
+    "description": "Trusted platform to discover the best tourist destinations in Indonesia",
+    "quickLinks": "Quick Links",
+    "contact": "Contact",
+    "followUs": "Follow Us",
+    "rights": "All Rights Reserved"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "name": "Full Name",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "loginSuccess": "Login successful!",
+    "registerSuccess": "Registration successful! Please login."
+  },
+  "review": {
+    "title": "Visitor Reviews",
+    "add": "Add Review",
+    "yourReview": "Write your review",
+    "rating": "Rating",
+    "submit": "Submit Review",
+    "loginRequired": "Please login to submit a review"
+  },
+  "weather": {
+    "title": "Current Weather",
+    "temperature": "Temperature",
+    "humidity": "Humidity",
+    "windSpeed": "Wind Speed"
+  }
+}
