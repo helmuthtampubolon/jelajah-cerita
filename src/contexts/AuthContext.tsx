@@ -4,6 +4,7 @@ interface User {
   id: string;
   name: string;
   email: string;
+  isAdmin: boolean;
 }
 
 interface AuthContextType {
@@ -41,12 +42,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return false;
     }
 
+    // Admin jika email mengandung 'admin'
+    const isAdmin = email.toLowerCase().includes("admin");
+
     // Add new user
     const newUser = {
       id: Date.now().toString(),
       name,
       email,
       password, // In production, this should be hashed
+      isAdmin,
     };
     users.push(newUser);
     localStorage.setItem(USERS_KEY, JSON.stringify(users));
@@ -62,10 +67,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
 
     if (foundUser) {
+      // Admin jika email mengandung 'admin' atau sudah disimpan sebagai admin
+      const isAdmin = foundUser.isAdmin || email.toLowerCase().includes("admin");
+      
       const userSession: User = {
         id: foundUser.id,
         name: foundUser.name,
         email: foundUser.email,
+        isAdmin,
       };
       setUser(userSession);
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(userSession));

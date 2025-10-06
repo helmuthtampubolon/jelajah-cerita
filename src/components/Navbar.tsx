@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, MapPin, User, Heart, LogOut } from "lucide-react";
+import { Menu, X, MapPin, User, Heart, LogOut, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import {
@@ -80,6 +80,17 @@ export const Navbar = () => {
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>Akun Saya</DropdownMenuLabel>
                   <DropdownMenuSeparator />
+                  {user.isAdmin && (
+                    <>
+                      <DropdownMenuItem asChild>
+                        <Link to="/admin" className="flex items-center gap-2 cursor-pointer">
+                          <Shield className="h-4 w-4" />
+                          Admin Dashboard
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                    </>
+                  )}
                   <DropdownMenuItem asChild>
                     <Link to="/wishlist" className="flex items-center gap-2 cursor-pointer">
                       <Heart className="h-4 w-4" />
@@ -130,6 +141,16 @@ export const Navbar = () => {
               
               {isAuthenticated && user ? (
                 <>
+                  {user.isAdmin && (
+                    <Link
+                      to="/admin"
+                      onClick={() => setIsOpen(false)}
+                      className="text-sm font-medium transition-colors hover:text-primary px-4 py-2 rounded-lg flex items-center gap-2"
+                    >
+                      <Shield className="h-4 w-4" />
+                      Admin Dashboard
+                    </Link>
+                  )}
                   <Link
                     to="/wishlist"
                     onClick={() => setIsOpen(false)}
