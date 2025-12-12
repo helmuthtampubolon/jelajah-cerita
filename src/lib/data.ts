@@ -1,5 +1,52 @@
+// Type definitions untuk struktur data
+export interface DayHours {
+  open: string;
+  close: string;
+  isClosed: boolean;
+}
+
+export interface OperatingHours {
+  monday: DayHours;
+  tuesday: DayHours;
+  wednesday: DayHours;
+  thursday: DayHours;
+  friday: DayHours;
+  saturday: DayHours;
+  sunday: DayHours;
+}
+
+export interface Destination {
+  id: number;
+  name: string;
+  location: string;
+  image: string;
+  rating: number;
+  reviews: number;
+  category: string;
+  price: string;
+  description: string;
+  fullDescription: string;
+  operatingHours: OperatingHours;
+  hargaTiket: string;
+  alamat: string;
+  koordinat: { lat: number; lng: number };
+  fasilitas: string[];
+  gallery: string[];
+}
+
+// Helper untuk membuat jam operasional default
+const createDefaultHours = (open: string, close: string, closedDays: string[] = []): OperatingHours => ({
+  monday: { open, close, isClosed: closedDays.includes('monday') },
+  tuesday: { open, close, isClosed: closedDays.includes('tuesday') },
+  wednesday: { open, close, isClosed: closedDays.includes('wednesday') },
+  thursday: { open, close, isClosed: closedDays.includes('thursday') },
+  friday: { open, close, isClosed: closedDays.includes('friday') },
+  saturday: { open, close, isClosed: closedDays.includes('saturday') },
+  sunday: { open, close, isClosed: closedDays.includes('sunday') },
+});
+
 // Dummy data untuk destinasi wisata (data lengkap)
-export const destinations = [
+export const destinations: Destination[] = [
   {
     id: 1,
     name: "Pantai Kuta",
@@ -11,15 +58,16 @@ export const destinations = [
     price: "Rp 150.000",
     description: "Pantai terkenal dengan sunset indah dan ombak untuk surfing",
     fullDescription: "Pantai Kuta adalah salah satu destinasi wisata paling ikonik di Bali. Terkenal dengan pasir putihnya yang lembut dan ombak yang sempurna untuk berselancar, pantai ini menawarkan pemandangan matahari terbenam yang menakjubkan. Dengan berbagai fasilitas seperti restoran, bar, dan toko suvenir di sekitarnya, Pantai Kuta menjadi tempat yang sempurna untuk bersantai dan menikmati keindahan alam Bali.",
-    jamBuka: "24 Jam",
+    operatingHours: createDefaultHours("00:00", "23:59"), // 24 jam
     hargaTiket: "Gratis (Parkir Rp 5.000)",
     alamat: "Jl. Pantai Kuta, Kuta, Badung, Bali 80361",
     koordinat: { lat: -8.7184, lng: 115.1686 },
-    fasilitas: ["Parkir", "Toilet", "Restoran", "Rental Surfboard", "Shower"],
+    fasilitas: ["Parkir Gratis", "Toilet Umum", "Restoran", "Rental Surfboard", "Shower", "WiFi Gratis", "ATM", "Toko Souvenir"],
     gallery: [
       "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1518709594023-6eab9bab7b23?auto=format&fit=crop&w=800&q=80",
     ],
   },
   {
@@ -33,15 +81,16 @@ export const destinations = [
     price: "Rp 300.000",
     description: "Gunung berapi aktif dengan pemandangan sunrise spektakuler",
     fullDescription: "Gunung Bromo adalah salah satu gunung berapi paling aktif dan terkenal di Indonesia. Terletak di Taman Nasional Bromo Tengger Semeru, gunung ini menawarkan pemandangan sunrise yang sangat spektakuler dari puncak Penanjakan. Pengunjung dapat menikmati lautan pasir yang luas dan kaldera yang menakjubkan. Suhu di area ini sangat dingin, terutama saat pagi hari, jadi pastikan membawa jaket tebal.",
-    jamBuka: "03:00 - 17:00 WIB",
+    operatingHours: createDefaultHours("03:00", "17:00"),
     hargaTiket: "Weekday: Rp 34.000 | Weekend: Rp 39.000",
     alamat: "Taman Nasional Bromo Tengger Semeru, Probolinggo, Jawa Timur",
     koordinat: { lat: -7.9425, lng: 112.9531 },
-    fasilitas: ["Parkir", "Penginapan", "Restoran", "Rental Jeep", "Warung"],
+    fasilitas: ["Parkir Gratis", "Penginapan", "Restoran", "Rental Jeep", "Warung", "Toilet Umum", "Pusat Informasi", "Pemandu Wisata"],
     gallery: [
       "https://images.unsplash.com/photo-1605640840605-14ac1855827b?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1518709594023-6eab9bab7b23?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=800&q=80",
     ],
   },
   {
@@ -55,11 +104,11 @@ export const destinations = [
     price: "Rp 200.000",
     description: "Danau vulkanik terbesar di Indonesia dengan pulau Samosir",
     fullDescription: "Danau Toba adalah danau vulkanik terbesar di Indonesia dan salah satu yang terbesar di dunia. Terletak di tengah-tengah Pulau Sumatera, danau ini terbentuk dari letusan gunung berapi super masif sekitar 74.000 tahun yang lalu. Di tengah danau terdapat Pulau Samosir yang memiliki luas hampir sama dengan Singapura. Danau Toba menawarkan pemandangan alam yang menakjubkan dengan budaya Batak yang kental.",
-    jamBuka: "24 Jam",
+    operatingHours: createDefaultHours("00:00", "23:59"), // 24 jam
     hargaTiket: "Gratis (Ferry ke Samosir Rp 10.000)",
     alamat: "Kabupaten Toba, Sumatera Utara",
     koordinat: { lat: 2.6845, lng: 98.8756 },
-    fasilitas: ["Ferry", "Penginapan", "Restoran", "Sewa Motor", "ATM"],
+    fasilitas: ["Ferry", "Penginapan", "Restoran", "Penyewaan Alat", "ATM", "Toilet Umum", "Gazebo", "Camping Ground"],
     gallery: [
       "https://images.unsplash.com/photo-1591768793355-74d04bb6608f?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
@@ -77,11 +126,11 @@ export const destinations = [
     price: "Rp 50.000",
     description: "Candi Buddha terbesar di dunia, warisan UNESCO",
     fullDescription: "Candi Borobudur adalah candi Buddha terbesar di dunia dan merupakan salah satu monumen Buddha terbesar di dunia. Dibangun pada abad ke-8 dan ke-9 di bawah dinasti Syailendra, candi ini terdiri dari enam teras berbentuk persegi yang diatasi oleh tiga platform melingkar. Dihiasi dengan 2.672 panel relief dan 504 stupa Buddha. Borobudur telah diakui UNESCO sebagai Situs Warisan Dunia sejak 1991.",
-    jamBuka: "06:00 - 17:00 WIB",
+    operatingHours: createDefaultHours("06:00", "17:00"),
     hargaTiket: "Domestik: Rp 50.000 | Asing: USD 25",
     alamat: "Jl. Badrawati, Borobudur, Magelang, Jawa Tengah 56553",
     koordinat: { lat: -7.6079, lng: 110.2038 },
-    fasilitas: ["Parkir", "Museum", "Restoran", "Toko Suvenir", "Guide"],
+    fasilitas: ["Parkir Gratis", "Museum", "Restoran", "Toko Souvenir", "Pemandu Wisata", "Toilet Umum", "Mushola", "Pusat Informasi"],
     gallery: [
       "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
@@ -99,15 +148,16 @@ export const destinations = [
     price: "Rp 500.000",
     description: "Surga bawah laut dengan biodiversitas tertinggi di dunia",
     fullDescription: "Raja Ampat adalah kepulauan yang terdiri dari lebih dari 1.500 pulau kecil, gundukan pasir dan beting yang mengelilingi empat pulau utama. Terletak di ujung barat laut Semenanjung Kepala Burung di Papua Barat. Raja Ampat merupakan tempat dengan biodiversitas laut tertinggi di dunia, menjadikannya destinasi diving dan snorkeling yang sangat populer. Keindahan alam bawah lautnya tidak tertandingi dengan terumbu karang yang masih sangat alami.",
-    jamBuka: "24 Jam",
+    operatingHours: createDefaultHours("00:00", "23:59"), // 24 jam
     hargaTiket: "PIN Raja Ampat: Rp 1.000.000 (berlaku 1 tahun)",
     alamat: "Kepulauan Raja Ampat, Papua Barat",
     koordinat: { lat: -0.2395, lng: 130.5183 },
-    fasilitas: ["Homestay", "Diving Center", "Rental Boat", "Guide"],
+    fasilitas: ["Penginapan", "Penyewaan Alat", "Pemandu Wisata", "Toilet Umum", "Restoran", "Locker", "Shower"],
     gallery: [
       "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1518709594023-6eab9bab7b23?auto=format&fit=crop&w=800&q=80",
     ],
   },
   {
@@ -121,11 +171,11 @@ export const destinations = [
     price: "Rp 250.000",
     description: "Kawah dengan fenomena blue fire yang menakjubkan",
     fullDescription: "Kawah Ijen adalah kompleks gunung berapi yang terletak di perbatasan antara Banyuwangi dan Bondowoso, Jawa Timur. Kawah Ijen terkenal dengan fenomena blue fire atau api biru yang hanya dapat dilihat pada malam hingga dini hari. Selain itu, Kawah Ijen juga memiliki danau kawah berwarna hijau toska yang sangat indah. Para penambang belerang bekerja di kawah ini setiap hari, membawa beban berat belerang dari dasar kawah.",
-    jamBuka: "02:00 - 14:00 WIB",
+    operatingHours: createDefaultHours("02:00", "14:00"),
     hargaTiket: "Weekday: Rp 5.000 | Weekend: Rp 10.000",
     alamat: "Kawah Ijen, Banyuwangi, Jawa Timur",
     koordinat: { lat: -8.0584, lng: 114.2421 },
-    fasilitas: ["Parkir", "Warung", "Masker Anti Gas", "Sewa Jeep"],
+    fasilitas: ["Parkir Gratis", "Warung", "P3K", "Penyewaan Alat", "Pemandu Wisata", "Toilet Umum"],
     gallery: [
       "https://images.unsplash.com/photo-1518709594023-6eab9bab7b23?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1605640840605-14ac1855827b?auto=format&fit=crop&w=800&q=80",
@@ -143,11 +193,11 @@ export const destinations = [
     price: "Rp 100.000",
     description: "Pura di atas batu karang dengan sunset memukau",
     fullDescription: "Tanah Lot adalah formasi bebatuan dengan pura Hindu di atasnya yang terletak di pesisir Tabanan, Bali. Pura ini adalah salah satu pura paling ikonik di Bali dan menjadi daya tarik wisata utama. Keunikan Tanah Lot terletak pada lokasinya yang berada di atas batu besar di tengah laut. Saat air pasang, pura ini terpisah dari daratan utama. Sunset di Tanah Lot sangat terkenal dan menjadi momen yang paling ditunggu wisatawan.",
-    jamBuka: "07:00 - 19:00 WITA",
+    operatingHours: createDefaultHours("07:00", "19:00"),
     hargaTiket: "Domestik: Rp 20.000 | Asing: Rp 60.000",
     alamat: "Beraban, Kediri, Tabanan, Bali 82121",
     koordinat: { lat: -8.6211, lng: 115.0866 },
-    fasilitas: ["Parkir", "Restoran", "Toilet", "Toko Suvenir", "Photo Spot"],
+    fasilitas: ["Parkir Gratis", "Restoran", "Toilet Umum", "Toko Souvenir", "Mushola", "ATM", "Kafe"],
     gallery: [
       "https://images.unsplash.com/photo-1555400082-2813edf0e75e?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80",
@@ -165,15 +215,16 @@ export const destinations = [
     price: "Rp 350.000",
     description: "Gerbang menuju Taman Nasional Komodo",
     fullDescription: "Labuan Bajo adalah kota pelabuhan nelayan yang terletak di ujung barat Pulau Flores, Nusa Tenggara Timur. Kota ini merupakan gerbang utama untuk mengunjungi Taman Nasional Komodo, rumah bagi komodo, kadal terbesar di dunia. Labuan Bajo menawarkan pemandangan laut yang indah dengan pulau-pulau kecil di sekitarnya, pantai berpasir putih, dan spot diving kelas dunia. Sunset dari Bukit Cinta atau Puncak Waringin sangat terkenal.",
-    jamBuka: "24 Jam",
+    operatingHours: createDefaultHours("00:00", "23:59"), // 24 jam
     hargaTiket: "Tiket Taman Nasional Komodo: Rp 150.000",
     alamat: "Labuan Bajo, Komodo, Manggarai Barat, NTT",
     koordinat: { lat: -8.4968, lng: 119.8879 },
-    fasilitas: ["Pelabuhan", "Penginapan", "Restoran", "Rental Boat", "ATM"],
+    fasilitas: ["Penginapan", "Restoran", "Penyewaan Alat", "ATM", "Toilet Umum", "Pusat Informasi", "Pemandu Wisata"],
     gallery: [
       "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1518709594023-6eab9bab7b23?auto=format&fit=crop&w=800&q=80",
     ],
   },
 ];
