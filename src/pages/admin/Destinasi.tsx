@@ -44,28 +44,12 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { destinations as initialDestinations, categories } from "@/lib/data";
+import { destinations as initialDestinations, categories, type OperatingHours } from "@/lib/data";
 import { toast } from "sonner";
 import OperatingHoursInput, { getDefaultOperatingHours } from "@/components/admin/OperatingHoursInput";
 import ImageGalleryInput from "@/components/admin/ImageGalleryInput";
 import FacilitiesInput from "@/components/admin/FacilitiesInput";
 import LocationPicker from "@/components/admin/LocationPicker";
-
-interface DayHours {
-  open: string;
-  close: string;
-  isClosed: boolean;
-}
-
-interface OperatingHours {
-  monday: DayHours;
-  tuesday: DayHours;
-  wednesday: DayHours;
-  thursday: DayHours;
-  friday: DayHours;
-  saturday: DayHours;
-  sunday: DayHours;
-}
 
 interface Coordinates {
   lat: number;
